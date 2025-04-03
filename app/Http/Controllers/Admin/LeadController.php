@@ -133,8 +133,9 @@ class LeadController extends Controller
      */
     private function getLeadsByHour()
     {
+        // Utiliser directement la fonction HOUR de MySQL puisque nous sommes en production
         $data = CentralizedLead::select(
-                DB::raw('cast(strftime(\'%H\', created_at) as integer) as hour'),
+                DB::raw("HOUR(created_at) as hour"),
                 DB::raw('count(*) as count')
             )
             ->groupBy('hour')
